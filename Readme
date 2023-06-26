@@ -1,6 +1,6 @@
-Crowdunding Platform:-
+Crowdfunding Platform:-
 
-Created a crowdfunding Dapp (Decentralize Application).
+Created a crowdfunding Dapp (Decentralized Application). One can create a campaign to fund their project and raise the required money, contributors have the rights to vote on the requests raised by the creators of campaigns to fund the required tasks for successful completion of the project, the transactions are done with smart contracts on ethtereum blockchain. 
 
 *Technologies used:-
 
@@ -12,5 +12,5 @@ Created a crowdfunding Dapp (Decentralize Application).
 6.Semantic ui react
 7.Infura
 8.Truffle HDWallet Provider
-9.Remix Ethereum IDE
+9.Remix Ethereum IDE (Initial testing of smart contract)
 
