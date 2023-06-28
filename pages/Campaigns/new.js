@@ -9,12 +9,19 @@ class CampaignNew extends Component {
   state = {
     minimumContribution:'',
     errorMessage:'',
-    loading:false
+    loading:false,
+    visible:false,
+    hidden:true
   }
   onSubmit = async (event)=>{
      event.preventDefault();
 
-     this.setState({loading:true, errorMessage:''});
+if(window.ethereum.networkVersion !=='11155111'){
+  
+  this.setState({visibile:true,hidden:false});
+}
+else{
+     this.setState({loading:true, errorMessage:'',visible:false,hidden:true});
 
      try{
           const accounts = await web3.eth.getAccounts();
@@ -29,6 +36,7 @@ class CampaignNew extends Component {
         }
 
         this.setState({loading:false});
+      }
   };
   render() {
     return (
@@ -47,6 +55,10 @@ class CampaignNew extends Component {
           </Form.Field>
 
           <Message error header = "Oops!" content={this.state.errorMessage} />
+
+          <Message negative visible={this.state.visible} hidden = {this.state.hidden} 
+          header="Oops!" content="Please switch to Sepolia Test Network"/>
+         
           <Button loading={this.state.loading} primary>Create!</Button>
         </Form>
       </Layout>
