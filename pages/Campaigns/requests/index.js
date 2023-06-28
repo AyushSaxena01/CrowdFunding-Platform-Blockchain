@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Layout from "../../../components/Layout";
-import {Button,Table} from "semantic-ui-react";
+import {Button,Table,Message} from "semantic-ui-react";
 import { Link } from "../../../routes";
 import Campaign from '../../../ethereum/campaign';
 import RequestRow from '../../../components/RequestRow';
@@ -23,6 +23,22 @@ class RequestIndex extends Component {
     return { address, requests, requestCount, approversCount };
   }
 
+  state={
+    visible: false,
+    hidden: true,
+    errorMessage:'',
+    error:'',
+    errVisible:false,
+    errHidden:true
+  }
+
+  sepoliaCheck = ({visible,hidden})=>{
+    this.setState({visible:visible,hidden:hidden});
+  }
+  errorCheck = ({errorMessage,error,errVisible,errHidden})=>{
+    this.setState({errorMessage:errorMessage,error:error,errVisible:errVisible,errHidden:errHidden});
+  }
+
   renderRow(){
     return this.props.requests.map((request,index)=>{
       return <RequestRow 
@@ -30,7 +46,9 @@ class RequestIndex extends Component {
       key={index}
       id={index}
       address={this.props.address}
-      approversCount={this.props.approversCount}      
+      approversCount={this.props.approversCount}
+      sepoliaCheck={this.sepoliaCheck} 
+      errorCheck={this.errorCheck}     
       />;
 
     });
@@ -66,6 +84,14 @@ class RequestIndex extends Component {
           </Body>
         </Table>
         <div>Found {this.props.requestCount} requests.</div>
+        <Message
+            negative
+            visible={this.state.visible}
+            hidden={this.state.hidden}
+            header="Oops!"
+            content="Please switch to Sepolia Test Network!"
+          />
+          <Message visible={this.state.errVisible} hidden={this.state.errHidden} error header='Oops' content={this.state.errorMessage}/>
       </Layout>
     );
   }

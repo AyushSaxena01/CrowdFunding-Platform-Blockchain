@@ -22,11 +22,6 @@
       "static/chunks/main.js",
       "static/chunks/pages/Campaigns/requests.js"
     ],
-    "/Campaigns/requests/new": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/Campaigns/requests/new.js"
-    ],
     "/Campaigns/show": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
