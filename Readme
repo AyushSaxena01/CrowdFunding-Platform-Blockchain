@@ -1,6 +1,9 @@
 Crowdfunding Platform:-
 
-Created a crowdfunding Dapp (Decentralized Application). One can create a campaign to fund their project and raise the required money, contributors have the rights to vote on the requests raised by the creators of campaigns to fund the required tasks for successful completion of the project, the transactions are done with smart contracts on ethtereum blockchain. 
+Created a crowdfunding Dapp (Decentralized Application). One can create a campaign to fund their project and raise the required money, 
+contributors have the rights to vote on the requests raised by the creators of campaigns to fund the required tasks for successful completion of the project, 
+the transactions are done with smart contracts on ethtereum blockchain. This currently works on Sepolia Test Network, the test ethers can be collected 
+from - https://sepoliafaucet.com/ which could be used to try the application. 
 
 *Technologies used:-
 
