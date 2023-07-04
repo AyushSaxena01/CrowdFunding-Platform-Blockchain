@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Input, Message, Button, Icon } from "semantic-ui-react";
+import { Form, Input, Message, Button } from "semantic-ui-react";
 import Campaign from "../ethereum/campaign";
 import web3 from "../ethereum/web3";
 import { Router } from "../routes";
@@ -8,6 +8,7 @@ class ContributeForm extends Component {
   state = {
     value: "",
     errorMessage: "",
+    errorMessage2: "",
     loading: false,
     visible: false,
     hidden: true,
@@ -17,11 +18,32 @@ class ContributeForm extends Component {
     event.preventDefault();
     const campaign = Campaign(this.props.address);
 
-    if (window.ethereum.networkVersion !== "11155111") {
-      this.setState({ visibile: true, hidden: false });
+    if (typeof window.ethereum == "undefined") {
+      this.setState({
+        visibile: true,
+        hidden: false,
+        errorMessage2: "Please download Metamask Wallet.",
+      });
+    } else if (window.ethereum.networkVersion !== "11155111") {
+      this.setState({
+        visibile: true,
+        hidden: false,
+        errorMessage2: "Please switch to Sepolia Test Network",
+      });
+    } else if (this.state.value.trim() == "") {
+      this.setState({
+        errorMessage2: "Empty input",
+        visibile: true,
+        hidden: false,
+      });
     } else {
-      
-      this.setState({ loading: true, errorMessage: "",visible:false,hidden:true });
+      this.setState({
+        loading: true,
+        errorMessage: "",
+        errorMessage2: "",
+        visible: false,
+        hidden: true,
+      });
 
       try {
         const accounts = await web3.eth.getAccounts();
@@ -37,7 +59,7 @@ class ContributeForm extends Component {
 
       this.setState({
         loading: false,
-        value: ""
+        value: "",
       });
     }
   };
@@ -62,7 +84,7 @@ class ContributeForm extends Component {
           visible={this.state.visible}
           hidden={this.state.hidden}
           header="Oops!"
-          content="Please switch to Sepolia Test Network!"
+          content={this.state.errorMessage2}
         />
         <Button primary loading={this.state.loading}>
           Contribute

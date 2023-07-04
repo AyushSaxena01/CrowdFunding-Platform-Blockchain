@@ -12,6 +12,11 @@
   ],
   "rootMainFiles": [],
   "pages": {
+    "/Campaigns/requests": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/Campaigns/requests.js"
+    ],
     "/Campaigns/show": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
