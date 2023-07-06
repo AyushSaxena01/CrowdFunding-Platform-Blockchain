@@ -68,7 +68,8 @@ class CampaignNew extends Component {
               labelPosition="right"
               value={this.state.minimumContribution}
               onChange={(event) => {
-                this.setState({ minimumContribution: event.target.value });
+                this.setState({ minimumContribution: event.target.value ,errorMessage:'',errorMessage2:'',visible: false,
+                hidden: true});
               }}
             />
           </Form.Field>

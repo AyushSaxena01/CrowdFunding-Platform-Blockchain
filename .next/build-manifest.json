@@ -17,6 +17,11 @@
       "static/chunks/main.js",
       "static/chunks/pages/index.js"
     ],
+    "/Campaigns/new": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/Campaigns/new.js"
+    ],
     "/Campaigns/requests": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",

@@ -24,7 +24,7 @@ class CampaignIndex extends Component {
       };
     });
 
-    return <Card.Group items={items} />;
+    return (items.length !==0 ? <Card.Group items={items} /> : <h3>No campains to show!</h3>);
   }
 
   render() {
