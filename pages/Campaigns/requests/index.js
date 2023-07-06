@@ -15,7 +15,7 @@ class RequestIndex extends Component {
      const approversCount=Number(ApproversCount);
 
      const requests=await Promise.all(
-      Array(parseInt(requestCount)).fill().map((element,index)=>{
+      Array(requestCount).fill().map((_,index)=>{
         return campaign.methods.requests(index).call();
       })
      );
@@ -27,13 +27,14 @@ class RequestIndex extends Component {
     visible: false,
     hidden: true,
     errorMessage:'',
+    errorMessage2:'',
     error:'',
     errVisible:false,
     errHidden:true
   }
 
-  sepoliaCheck = ({visible,hidden})=>{
-    this.setState({visible:visible,hidden:hidden});
+  sepoliaCheck = ({visible,hidden,errorMessage2})=>{
+    this.setState({visible:visible,hidden:hidden,errorMessage2:errorMessage2});
   }
   errorCheck = ({errorMessage,error,errVisible,errHidden})=>{
     this.setState({errorMessage:errorMessage,error:error,errVisible:errVisible,errHidden:errHidden});
@@ -89,7 +90,7 @@ class RequestIndex extends Component {
             visible={this.state.visible}
             hidden={this.state.hidden}
             header="Oops!"
-            content="Please switch to Sepolia Test Network!"
+            content={this.state.errorMessage2}
           />
           <Message visible={this.state.errVisible} hidden={this.state.errHidden} error header='Oops' content={this.state.errorMessage}/>
       </Layout>

@@ -17,6 +17,7 @@ class ContributeForm extends Component {
   onSubmit = async (event) => {
     event.preventDefault();
     const campaign = Campaign(this.props.address);
+    this.setState({ errorMessage:''});
 
     if (typeof window.ethereum == "undefined") {
       this.setState({

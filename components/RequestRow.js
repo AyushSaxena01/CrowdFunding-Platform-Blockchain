@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import { Table, Button, Message } from "semantic-ui-react";
 import web3 from "../ethereum/web3";
 import Campaign from "../ethereum/campaign";
+import {Router} from '../routes';
 
 class RequestRow extends Component {
   state = {
     loadingApprove: false,
     loadingFinalize: false,
   };
+  
   onApprove = async () => {
     this.props.errorCheck({
       errorMessage: "",
@@ -17,16 +19,19 @@ class RequestRow extends Component {
     });
     const campaign = Campaign(this.props.address);
 
-    const accounts = await web3.eth.getAccounts();
+    if (typeof window.ethereum == "undefined"){
+      this.props.sepoliaCheck({ visible: true, hidden: false , errorMessage2:'Please download Metamask!'});
+    }
 
-    if (window.ethereum.networkVersion !== "11155111") {
+    else if (window.ethereum.networkVersion !== "11155111") {
 
-      this.props.sepoliaCheck({ visible: true, hidden: false });
+      this.props.sepoliaCheck({ visible: true, hidden: false , errorMessage2:'Please switch to Sepolia Test Network!'});
 
     } 
     else {
+      this.props.sepoliaCheck({ visible: false, hidden: true, errorMessage2:'' });
 
-      this.props.sepoliaCheck({ visible: false, hidden: true });
+      const accounts = await web3.eth.getAccounts();
 
       this.setState({ loadingApprove: true });
 
@@ -35,6 +40,7 @@ class RequestRow extends Component {
         await campaign.methods.approveRequest(this.props.id).send({
           from: accounts[0],
         });
+        Router.replaceRoute(`/Campaigns/${this.props.address}/requests`);
       } 
       catch (error) {
 
@@ -48,6 +54,7 @@ class RequestRow extends Component {
       }
 
       this.setState({ loadingApprove: false });
+      
     }
   };
 
@@ -60,16 +67,20 @@ class RequestRow extends Component {
     });
 
     const campaign = Campaign(this.props.address);
-    const accounts = await web3.eth.getAccounts();
+    
+    if (typeof window.ethereum == "undefined"){
+      this.props.sepoliaCheck({ visible: true, hidden: false , errorMessage2:'Please download Metamask!'});
+    }
 
-    if (window.ethereum.networkVersion !== "11155111") {
 
-      this.props.sepoliaCheck({ visible: true, hidden: false });
+    else if (window.ethereum.networkVersion !== "11155111") {
+
+      this.props.sepoliaCheck({ visible: true, hidden: false, errorMessage2:'Please switch to Sepolia Test Network!!' });
 
     } 
     else {
-
-      this.props.sepoliaCheck({ visible: false, hidden: true });
+      this.props.sepoliaCheck({ visible: false, hidden: true , errorMessage2:''});
+      const accounts = await web3.eth.getAccounts();
       this.setState({ loadingFinalize: true });
 
       try {
@@ -77,6 +88,7 @@ class RequestRow extends Component {
         await campaign.methods.finalizeRequest(this.props.id).send({
           from: accounts[0],
         });
+        Router.replaceRoute(`/Campaigns/${this.props.address}/requests`);
         
       } 
       catch (error) {
@@ -88,9 +100,11 @@ class RequestRow extends Component {
           errHidden: false,
 
         });
+        
       }
+      this.setState({ loadingFinalize: false });
     }
-    this.setState({ loadingFinalize: false });
+    
   };
 
   render() {
