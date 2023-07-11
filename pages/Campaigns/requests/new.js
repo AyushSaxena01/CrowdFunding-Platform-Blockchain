@@ -12,6 +12,7 @@ class RequestNew extends Component {
     recipient: "",
     loading: false,
     errorMessage: "",
+    errorMessage2: "",
     visible: false,
     hidden: true,
   };
@@ -21,6 +22,7 @@ class RequestNew extends Component {
     return { address };
   }
 
+
   onSubmit = async (event) => {
     event.preventDefault();
 
@@ -28,12 +30,24 @@ class RequestNew extends Component {
 
     const { description, value, recipient } = this.state;
 
-    if (window.ethereum.networkVersion !== "11155111") {
-      this.setState({ visibile: true, hidden: false });
-    } else {
+    if (typeof window.ethereum == "undefined") {
+      this.setState({
+        visibile: true,
+        hidden: false,
+        errorMessage2: "Please download Metamask Wallet.",
+      });
+    }
+   
+
+   else if (window.ethereum.networkVersion !== "11155111") {
+      this.setState({ visibile: true, hidden: false,errorMessage2:'Please switch to Sepolia Test Network!' });
+    } 
+ 
+    else {
       this.setState({
         loading: true,
         errorMessage: "",
+        errorMessage2: "",
         visible: false,
         hidden: true,
       });
@@ -102,7 +116,7 @@ class RequestNew extends Component {
             visible={this.state.visible}
             hidden={this.state.hidden}
             header="Oops!"
-            content="Please switch to Sepolia Test Network!"
+            content={this.state.errorMessage2}
           />
           <Button primary loading={this.state.loading}>
             Create!

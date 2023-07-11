@@ -16,7 +16,16 @@ class CampaignNew extends Component {
   };
   
   onSubmit = async (event) => {
+   
     event.preventDefault();
+    
+    this.setState({
+      errorMessage: "",
+      errorMessage2:"",
+      visible: false,
+      hidden: true,
+    });
+
 
     if (typeof window.ethereum == "undefined") {
       this.setState({
